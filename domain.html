@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Круті шкарпетки — Предметна галузь та бізнес-логіка</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="container site-header">
+      <h1>Магазин «Круті шкарпетки» (IS-42 Litvinko Karyna)</h1>
+      <nav class="topnav">
+        <a href="index.html">Головна</a>
+        <a href="domain.html" class="active">Предметна галузь</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section>
+        <h2>Опис середовища</h2>
+        <p>
+          Вебсайт магазину SOCKSY надає покупцям можливість переглянути каталог
+          товарів, порівняти ціни, дізнатися про характеристики та зробити
+          замовлення онлайн.
+        </p>
+      </section>
+
+      <section>
+        <h2>Бізнес-логіка</h2>
+        <ol>
+          <li>
+            Користувач переглядає каталог із фотографіями та коротким описом
+            моделей.
+          </li>
+          <li>Порівнює ціни у таблиці та обирає потрібний розмір.</li>
+          <li>Заповнює форму замовлення (ім’я, телефон, адреса доставки).</li>
+          <li>
+            Отримує підтвердження про прийняття замовлення (у навчальній версії
+            — повідомлення-заглушка).
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Функціональні вимоги</h2>
+        <ul>
+          <li>Галерея товарів із зображеннями.</li>
+          <li>Таблиця з цінами та наявністю.</li>
+          <li>Списки характеристик (матеріали, розміри).</li>
+          <li>Форма для оформлення замовлення.</li>
+          <li>Посилання між сторінками та на соцмережі.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Нефункціональні вимоги</h2>
+        <ul>
+          <li>Адаптивність і доступність (alt-тексти, контрастність).</li>
+          <li>Перевірка коректності заповнення форм.</li>
+          <li>Підтримка основних браузерів.</li>
+          <li>Зрозуміла структура навігації.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="container site-footer">
+      <p>&copy; <span id="year"></span> SOCKSY — магазин шкарпеток.</p>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
