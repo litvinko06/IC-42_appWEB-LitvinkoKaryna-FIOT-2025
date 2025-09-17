@@ -3,23 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Шрифт + стилі -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+
     <title>Магазин Круті шкарпетки</title>
-    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- ШАПКА -->
     <header class="container site-header">
       <h1>Магазин <span class="accent">Круті шкарпетки</span></h1>
       <p class="subtitle">IS-42 — Litvinko Karyna</p>
+
       <nav class="topnav">
         <a href="index.html" class="active">Головна</a>
-        <a href="domain.html">Про магазин та бізнес-логіку</a>
+        <a href="domain.html">Про магазин</a>
         <a href="#catalog">Каталог</a>
         <a href="#pricing">Ціни</a>
         <a href="#order">Замовлення</a>
@@ -27,39 +31,42 @@
     </header>
 
     <main class="container">
-      <section>
-        <h2>Вітаємо в крутих носках!</h2>
+      <!-- ВІТАННЯ -->
+      <section class="panel">
+        <h2>Вітаємо в крутих шкарпетках!</h2>
         <p>
           У нас — яскраві, теплі та зручні шкарпетки на будь-який сезон. Тут ви
-          знайдете галерею товарів, характеристики, таблицю цін та форму
-          замовлення.
+          знайдете галерею товарів, таблицю цін та форму замовлення.
         </p>
       </section>
 
-      <!-- Галерея -->
-      <section id="catalog">
+      <!-- КАТАЛОГ -->
+      <section id="catalog" class="panel">
         <h2>Каталог</h2>
+
         <div class="gallery">
           <figure>
             <img
-              src="https://placehold.co/480x300"
-              alt="Кольорові шкарпетки з візерунком"
+              src="images/color-1.jpg"
+              alt="Кольорові шкарпетки"
               loading="lazy"
             />
             <figcaption>Color Pop — кольорові</figcaption>
           </figure>
+
           <figure>
             <img
-              src="https://placehold.co/480x300"
+              src="images/classic-1.jpg"
               alt="Класичні шкарпетки"
               loading="lazy"
             />
             <figcaption>Classic — класичні</figcaption>
           </figure>
+
           <figure>
             <img
-              src="https://placehold.co/480x300"
-              alt="Спортивні дихаючі шкарпетки"
+              src="images/sport-1.jpg"
+              alt="Спортивні шкарпетки"
               loading="lazy"
             />
             <figcaption>Sport Air — спортивні</figcaption>
@@ -67,7 +74,7 @@
         </div>
       </section>
 
-      <!-- Таблиця -->
+      <!-- ЦІНИ -->
       <section id="pricing" class="panel">
         <h2>Актуальні ціни</h2>
         <div class="table-wrap">
@@ -100,68 +107,85 @@
         </div>
       </section>
 
-      <!-- Форма -->
-      <section id="order">
+      <!-- ФОРМА ЗАМОВЛЕННЯ -->
+      <section id="order" class="panel">
         <h2>Форма замовлення</h2>
-        <form class="form" action="#" method="post">
-          <label>
-            Ім’я *
+
+        <form class="form" id="orderForm">
+          <label
+            >Ім’я *
             <input type="text" name="name" required placeholder="Ваше ім’я" />
           </label>
-          <label>
-            Телефон *
+
+          <label
+            >Телефон *
             <input type="tel" name="phone" required placeholder="+380..." />
           </label>
-          <label>
-            Модель
+
+          <label
+            >Модель
             <select name="model">
               <option>Color Pop</option>
               <option>Classic</option>
               <option>Sport Air</option>
             </select>
           </label>
-          <label>
-            Розмір
+
+          <label
+            >Розмір
             <select name="size">
               <option>35–38 (S)</option>
               <option>39–42 (M)</option>
               <option>43–46 (L)</option>
             </select>
           </label>
+
+          <label
+            >Коментар
+            <textarea
+              name="note"
+              rows="3"
+              placeholder="Колір, розмір, побажання"
+            ></textarea>
+          </label>
+
           <button type="submit">Замовити</button>
         </form>
       </section>
-
-      <section>
-        <h2>Корисні посилання</h2>
-        <ul>
-          <li>
-            <a href="domain.html">Опис предметної галузі та бізнес-логіки</a>
-          </li>
-        </ul>
-      </section>
     </main>
 
+    <!-- ФУТЕР -->
     <footer class="container site-footer">
-      <p>&copy; <span id="year"></span> SOCKSY — магазин шкарпеток.</p>
+      <p>&copy; <span id="year"></span> Магазин «Круті шкарпетки».</p>
     </footer>
 
+    <!-- СКРИПТИ -->
     <script>
+      // рік у футері
       document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-    <script>
-      // знаходимо форму
-      const form = document.querySelector("form");
 
-      // відстежуємо подію "submit"
-      form.addEventListener("submit", function (event) {
-        event.preventDefault(); // щоб не перезавантажувалась сторінка
+      // обробник форми (перевірка + повідомлення)
+      const form = document.getElementById("orderForm");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = form.elements.name?.value.trim();
+        const phone = form.elements.phone?.value.trim();
+
+        if (!name || !phone) {
+          alert("Будь ласка, заповніть Ім’я і Телефон.");
+          return;
+        }
+
+        const phoneOk = /^(\+?\d)[\d\s\-()]{8,}$/.test(phone);
+        if (!phoneOk) {
+          alert("Перевірте формат телефону (наприклад +380XXXXXXXXX).");
+          return;
+        }
 
         alert(
           "✅ Дякуємо, ваше замовлення прийнято! Ми з вами зв’яжемося найближчим часом."
         );
-
-        // (опціонально) очистимо форму
         form.reset();
       });
     </script>
