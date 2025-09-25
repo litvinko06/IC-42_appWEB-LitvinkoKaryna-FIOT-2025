@@ -24,7 +24,7 @@
       <!-- Замість переходу на окрему сторінку "domain.html", робимо SPA-навігацію по якорях -->
       <nav class="topnav" id="topnav">
         <a href="#home" class="active">Головна</a>
-        <a href="about.html">Про магазин</a>
+        <a href="domain.html">Про магазин</a>
         <a href="#catalog">Каталог</a>
         <a href="#pricing">Ціни</a>
         <a href="#order">Замовлення</a>
@@ -246,13 +246,12 @@
         `;
         // Кнопка "Додати у форму" підставляє модель у форму замовлення
         var fillBtn = card.querySelector("#fillFormBtn");
-        if (fillBtn)
-          fillBtn.addEventListener("click", () => {
-            if (modelField) modelField.value = p.modelForForm;
-            smoothScrollTo("#order");
-            setActiveByHash("#order");
-            history.pushState(null, "", "#order");
-          });
+        if (fillBtn) fillBtn.addEventListener("click", () => {
+          if (modelField) modelField.value = p.modelForForm;
+          smoothScrollTo("#order");
+          setActiveByHash("#order");
+          history.pushState(null, "", "#order");
+        });
       }
 
       // Ініціалізація вибору та первинний рендер
@@ -262,7 +261,7 @@
           select.addEventListener("change", () => renderProduct(select.value));
         }
       });
-      // Обробник форми (перевірка + повідомлення)
+// Обробник форми (перевірка + повідомлення)
       const form = document.getElementById("orderForm");
       form.addEventListener("submit", (e) => {
         e.preventDefault();
