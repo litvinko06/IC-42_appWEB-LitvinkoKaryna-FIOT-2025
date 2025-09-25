@@ -1,144 +1,229 @@
 /* ======= ТЕМА ======= */
 :root{
-    --bg: #F9A347;           /* фон */
-    --panel: rgba(255,255,255,.85); /* легкі напівпрозорі блоки */
-    --panel-2: rgba(255,255,255,.65);
-  
-    --accent: #FF7A00;       /* акцент/кнопки */
-    --accent-2:#FF8F2A;
-  
-    --text:#1f1f1f;
-    --muted:#595959;
-    --border: rgba(0,0,0,.12);
-    --shadow-s: 0 2px 6px rgba(0,0,0,.10);
-    --shadow-m: 0 8px 20px rgba(0,0,0,.12);
+  --bg: #F9A347;           /* фон */
+  --panel: rgba(255,255,255,.85); /* легкі напівпрозорі блоки */
+  --panel-2: rgba(255,255,255,.65);
+
+  --accent: #FF7A00;       /* акцент/кнопки */
+  --accent-2:#FF8F2A;
+
+  --text:#1f1f1f;
+  --muted:#595959;
+  --border: rgba(0,0,0,.12);
+  --shadow-s: 0 2px 6px rgba(0,0,0,.10);
+  --shadow-m: 0 8px 20px rgba(0,0,0,.12);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font:16px/1.6 "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a{ color: var(--accent); text-decoration:none; }
+a:hover{ text-decoration:underline; color: var(--accent-2); }
+
+.container{ width:min(1120px,92%); margin-inline:auto; }
+
+/* ======= ШАПКА  ======= */
+.site-header{
+  background: linear-gradient(to bottom, rgba(255,255,255,.95), rgba(255,255,255,.8) 80%, transparent);
+  padding: 16px 10px 10px;
+  position: sticky; top:0; z-index:10;
+  backdrop-filter: blur(6px);
+}
+.site-header h1{ margin:0; font-size:clamp(22px,3vw,32px); }
+.site-header .accent{ color: var(--accent); font-weight:700; }
+.site-header .subtitle{ margin:4px 0 0; color:var(--muted); font-size:14px; }
+
+.topnav{ display:flex; gap:18px; margin-top:10px; flex-wrap:wrap; }
+.topnav a{
+  color: var(--text);
+  font-weight:600;
+  padding: 6px 10px;
+  margin: 0 4px;
+  position:relative;
+  border-radius:6px;
+}
+.topnav a::after{
+  content:""; position:absolute; left:0; bottom:0; height:2px; width:0; background: var(--accent);
+  transition: width .25s ease;
+}
+.topnav a:hover::after, .topnav a.active::after{ width:100%; }
+
+/* ======= СЕКЦІЇ ======= */
+section{ margin-top:18px; scroll-margin-top: 80px; }
+.panel{
+  background: var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+  box-shadow: var(--shadow-s);
+}
+
+/* ======= ЗАГОЛОВКИ ======= */
+h1,h2,h3{ line-height:1.25; }
+h2{ margin:0 0 8px; font-size:clamp(20px,2.6vw,28px); }
+h3{ margin:8px 0 6px; font-size:clamp(18px,2.2vw,22px); }
+
+/* ======= КАТАЛОГ ======= */
+.gallery{
+  display:grid; gap:22px;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  align-items:start;
+}
+@media (max-width:900px){ .gallery{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width:620px){ .gallery{ grid-template-columns: 1fr; } }
+
+.gallery figure{
+  background: var(--panel-2);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+  box-shadow: var(--shadow-s);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.gallery figure:hover{ transform: translateY(-4px); box-shadow: var(--shadow-m); }
+
+.gallery img{
+  width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover;
+  border-radius:12px; display:block; margin-bottom:10px;
+}
+.gallery figcaption{ font-weight:600; }
+
+/* ======= НОВІ ЕЛЕМЕНТИ ЦІН ======= */
+.picker{
+  display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:12px;
+}
+.select{
+  padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:#fff; color:var(--text);
+}
+.select:focus{
+  outline:none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,122,0,.22);
+}
+
+.product-card{
+  background: var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px; padding:12px; box-shadow: var(--shadow-s);
+}
+.product{
+  display:grid; grid-template-columns: 150px 1fr; gap:14px; align-items:center;
+}
+.product img{
+  width:100%; height:auto; border-radius:12px; aspect-ratio: 1/1; object-fit: cover;
+}
+.product .info h3{ margin:0 0 6px; }
+.product .muted{ color: var(--muted); margin:0 0 10px; }
+.price-line{ display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.price{ color: var(--accent); font-weight:800; font-size:20px; }
+@media (max-width:560px){
+  .product{ grid-template-columns: 1fr; }
+}
+
+/* ======= ФОРМА ======= */
+.form{
+  display:grid; gap:12px;
+  background: var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px; padding:14px; box-shadow: var(--shadow-s);
+}
+label{ display:grid; gap:6px; font-weight:600; color:var(--muted); }
+input, select, textarea{
+  padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:#fff; color:var(--text);
+}
+input:focus, select:focus, textarea:focus{
+  outline:none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,122,0,.22);
+}
+
+/* Кнопки */
+button{
+  padding:12px 18px; border:0; border-radius:999px; background: var(--accent);
+  color:#fff; font-weight:700; cursor:pointer; box-shadow: var(--shadow-s); transition: background .2s;
+}
+button:hover{ background: var(--accent-2); }
+
+/* ======= ФУТЕР ======= */
+.site-footer{
+  background: linear-gradient(to top, rgba(255,255,255,.9), rgba(255,255,255,0));
+  border-top: 1px solid var(--border);
+  border-top-left-radius:16px; border-top-right-radius:16px;
+  padding:16px 0; margin-top:22px;
+}
+
+
+/* ======= КНОПКА НАЗАД ======= */
+.back-btn {
+  display: inline-block;
+  margin: 10px 0 20px;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow-s);
+}
+.back-btn:hover {
+  background: var(--accent-2);
+}
+
+
+/* ====== АДАПТИВ ДЛЯ КАРТОК ====== */
+.product-card {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.product {
+  max-width: 100%;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow-s);
+  overflow: hidden;
+}
+
+.product img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.product .info {
+  padding: 1rem;
+}
+
+.product .price-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.product .price {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* Кнопка під ціну на вузьких екранах */
+@media (max-width: 480px) {
+  .product .price-line {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font:16px/1.6 "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+  .product .price {
+    font-size: 1.1rem;
   }
-  
-  a{ color: var(--accent); text-decoration:none; }
-  a:hover{ text-decoration:underline; color: var(--accent-2); }
-  
-  .container{ width:min(1120px,92%); margin-inline:auto; }
-  
-  /* ======= ШАПКА  ======= */
-  .site-header{
-    background: linear-gradient(to bottom, rgba(255,255,255,.95), rgba(255,255,255,.8) 80%, transparent);
-    padding: 16px 10px 10px;
-    position: sticky; top:0; z-index:10;
-    backdrop-filter: blur(6px);
+  .product button {
+    width: 100%;
+    text-align: center;
   }
-  .site-header h1{ margin:0; font-size:clamp(22px,3vw,32px); }
-  .site-header .accent{ color: var(--accent); font-weight:700; }
-  .site-header .subtitle{ margin:4px 0 0; color:var(--muted); font-size:14px; }
-  
-  .topnav{ display:flex; gap:18px; margin-top:10px; flex-wrap:wrap; }
-  .topnav a{
-    color: var(--text);
-    font-weight:600;
-    padding: 6px 10px;   /* додали відступи */
-    margin: 0 4px;       /* невеликий проміжок між посиланнями */
-    position:relative;
-    border-radius:6px;   /* щоб фон був акуратний, якщо додати */
-  }
-  
-  .topnav a::after{
-    content:""; position:absolute; left:0; bottom:0; height:2px; width:0; background: var(--accent);
-    transition: width .25s ease;
-  }
-  .topnav a:hover::after, .topnav a.active::after{ width:100%; }
-  
-  /* ======= СЕКЦІЇ ======= */
-  section{ margin-top:18px; }
-  .panel{
-    background: var(--panel);
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:18px;
-    box-shadow: var(--shadow-s);
-  }
-  
-  /* ======= ЗАГОЛОВКИ ======= */
-  h1,h2,h3{ line-height:1.25; }
-  h2{ margin:0 0 8px; font-size:clamp(20px,2.6vw,28px); }
-  h3{ margin:8px 0 6px; font-size:clamp(18px,2.2vw,22px); }
-  
-  /* ======= КАТАЛОГ (більші фото, без важких «плиток») ======= */
-  .gallery{
-    display:grid; gap:22px;
-    grid-template-columns: repeat(3, minmax(0,1fr));
-    align-items:start;
-  }
-  @media (max-width:900px){ .gallery{ grid-template-columns: repeat(2,1fr); } }
-  @media (max-width:620px){ .gallery{ grid-template-columns: 1fr; } }
-  
-  .gallery figure{
-    background: var(--panel-2);
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:12px;
-    text-align:center;
-    box-shadow: var(--shadow-s);
-    transition: transform .18s ease, box-shadow .18s ease;
-  }
-  .gallery figure:hover{ transform: translateY(-4px); box-shadow: var(--shadow-m); }
-  
-  .gallery img{
-    width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover;
-    border-radius:12px; display:block; margin-bottom:10px;
-  }
-  .gallery figcaption{ font-weight:600; }
-  
-  /* ======= ТАБЛИЦЯ ЦІН (легка) ======= */
-  .table-wrap{
-    background: var(--panel);
-    border:1px solid var(--border);
-    border-radius:14px; padding:12px; box-shadow: var(--shadow-s);
-  }
-  table{ width:100%; border-collapse: collapse; }
-  th, td{ padding:12px 10px; border-bottom:1px solid var(--border); text-align:left; }
-  thead th{
-    background: rgba(0,0,0,.06);
-  }
-  td.price{
-    color: var(--accent);
-    font-weight:800; text-align:right;
-  }
-  
-  /* ======= ФОРМА ======= */
-  .form{
-    display:grid; gap:12px;
-    background: var(--panel);
-    border:1px solid var(--border);
-    border-radius:14px; padding:14px; box-shadow: var(--shadow-s);
-  }
-  label{ display:grid; gap:6px; font-weight:600; color:var(--muted); }
-  input, select, textarea{
-    padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:#fff; color:var(--text);
-  }
-  input:focus, select:focus, textarea:focus{
-    outline:none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,122,0,.22);
-  }
-  
-  /* Кнопки */
-  button{
-    padding:12px 18px; border:0; border-radius:999px; background: var(--accent);
-    color:#fff; font-weight:700; cursor:pointer; box-shadow: var(--shadow-s); transition: background .2s;
-  }
-  button:hover{ background: var(--accent-2); }
-  
-  /* ======= ФУТЕР (легкий) ======= */
-  .site-footer{
-    background: linear-gradient(to top, rgba(255,255,255,.9), rgba(255,255,255,0));
-    border-top: 1px solid var(--border);
-    border-top-left-radius:16px; border-top-right-radius:16px;
-    padding:16px 0; margin-top:22px;
-  }
-  
+}
