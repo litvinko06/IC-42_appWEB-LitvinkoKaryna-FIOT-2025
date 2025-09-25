@@ -21,24 +21,27 @@
       <h1>Магазин <span class="accent">Круті шкарпетки</span></h1>
       <p class="subtitle">IС-42 — Litvinko Karyna</p>
 
-      <nav class="topnav">
-        <a href="index.html" class="active">Головна</a>
-        <a href="domain.html">Про магазин</a>
+      <!-- Замість переходу на окрему сторінку "domain.html", робимо SPA-навігацію по якорях -->
+      <nav class="topnav" id="topnav">
+        <a href="#home" class="active">Головна</a>
+        <a href="about.html">Про магазин</a>
         <a href="#catalog">Каталог</a>
         <a href="#pricing">Ціни</a>
         <a href="#order">Замовлення</a>
       </nav>
     </header>
 
-    <main class="container">
+    <main class="container" id="home">
       <!-- ВІТАННЯ -->
       <section class="panel">
         <h2>Вітаємо в крутих шкарпетках!</h2>
         <p>
           У нас — яскраві, теплі та зручні шкарпетки на будь-який сезон. Тут ви
-          знайдете галерею товарів, таблицю цін та форму замовлення.
+          знайдете галерею товарів, меню моделей із цінами та форму замовлення.
         </p>
       </section>
+
+      <!-- ПРО МАГАЗИН (вкладка працює як секція, щоб не "залипати" на окремій сторінці) -->
 
       <!-- КАТАЛОГ -->
       <section id="catalog" class="panel">
@@ -74,36 +77,21 @@
         </div>
       </section>
 
-      <!-- ЦІНИ -->
+      <!-- ЦІНИ (замість таблиці — меню вибору моделі) -->
       <section id="pricing" class="panel">
-        <h2>Актуальні ціни</h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Модель</th>
-                <th>Опис</th>
-                <th>Ціна</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Класичні чорні</td>
-                <td>Набір 3 пари, 100% бавовна</td>
-                <td class="price">129 ₴</td>
-              </tr>
-              <tr>
-                <td>Кольорові «Pop»</td>
-                <td>Яскраві принти, 2 пари</td>
-                <td class="price">159 ₴</td>
-              </tr>
-              <tr>
-                <td>Спортивні</td>
-                <td>Дихаюча тканина, 1 пара</td>
-                <td class="price">99 ₴</td>
-              </tr>
-            </tbody>
-          </table>
+        <h2>Моделі та ціни</h2>
+
+        <div class="picker">
+          <label for="productSelect">Оберіть модель:</label>
+          <select id="productSelect" class="select">
+            <option value="classic">Класичні чорні — набір 3 пари</option>
+            <option value="color">Кольорові «Pop» — 2 пари</option>
+            <option value="sport">Спортивні «Sport Air» — 1 пара</option>
+          </select>
+        </div>
+
+        <div id="productCard" class="product-card" aria-live="polite">
+          <!-- наповнюється через JS -->
         </div>
       </section>
 
@@ -124,7 +112,7 @@
 
           <label
             >Модель
-            <select name="model">
+            <select name="model" id="modelField">
               <option>Color Pop</option>
               <option>Classic</option>
               <option>Sport Air</option>
@@ -161,10 +149,119 @@
 
     <!-- СКРИПТИ -->
     <script>
-      // рік у футері
+      // Дані по товарах (замість статичної таблиці)
+      const PRODUCTS = {
+        classic: {
+          name: "Класичні чорні",
+          desc: "Набір 3 пари, 100% бавовна",
+          price: 129,
+          unit: "₴",
+          img: "images/classic-1.jpg",
+          modelForForm: "Classic",
+        },
+        color: {
+          name: "Кольорові «Pop»",
+          desc: "Яскраві принти, 2 пари",
+          price: 159,
+          unit: "₴",
+          img: "images/color-1.jpg",
+          modelForForm: "Color Pop",
+        },
+        sport: {
+          name: "Спортивні «Sport Air»",
+          desc: "Дихаюча тканина, 1 пара",
+          price: 99,
+          unit: "₴",
+          img: "images/sport-1.jpg",
+          modelForForm: "Sport Air",
+        },
+      };
+
+      // Рік у футері
       document.getElementById("year").textContent = new Date().getFullYear();
 
-      // обробник форми (перевірка + повідомлення)
+      // Плавний скрол і підсвітка активного пункту меню
+      const nav = document.getElementById("topnav");
+      const links = [...nav.querySelectorAll("a")];
+      const sections = links
+        .map((a) => document.querySelector(a.getAttribute("href")))
+        .filter(Boolean);
+
+      function setActiveByHash(hash) {
+        links.forEach((a) => {
+          a.classList.toggle("active", a.getAttribute("href") === hash);
+        });
+      }
+
+      function smoothScrollTo(target) {
+        const el = document.querySelector(target);
+        if (!el) return;
+        const top = el.getBoundingClientRect().top + window.scrollY - 10;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+
+      nav.addEventListener("click", (e) => {
+        const a = e.target.closest("a");
+        if (!a) return;
+        const href = a.getAttribute("href");
+        if (href.startsWith("#")) {
+          e.preventDefault();
+          history.pushState(null, "", href);
+          setActiveByHash(href);
+          smoothScrollTo(href);
+        }
+      });
+
+      window.addEventListener("popstate", () => {
+        setActiveByHash(location.hash || "#home");
+      });
+
+      // Встановити активний пункт при завантаженні та перейти до секції, якщо є hash
+      window.addEventListener("DOMContentLoaded", () => {
+        const hash = location.hash || "#home";
+        setActiveByHash(hash);
+        if (location.hash) smoothScrollTo(hash);
+      });
+
+      // Відмальовка картки товару
+      const select = document.getElementById("productSelect");
+      const card = document.getElementById("productCard");
+      const modelField = document.getElementById("modelField");
+
+      function renderProduct(key) {
+        const p = PRODUCTS[key];
+        if (!p) return;
+        card.innerHTML = (
+          <div class="product">
+            <img src="\${p.img}" alt="\${p.name}" loading="lazy" />
+            <div class="info">
+              <h3>\${p.name}</h3>
+              <p class="muted">\${p.desc}</p>
+              <div class="price-line">
+                <span class="price">
+                  \${p.price} \${p.unit}
+                </span>
+                <button type="button" id="fillFormBtn">
+                  Додати у форму
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+        // Кнопка "Додати у форму" підставляє модель у форму замовлення
+        card.querySelector("#fillFormBtn")?.addEventListener("click", () => {
+          if (modelField) modelField.value = p.modelForForm;
+          smoothScrollTo("#order");
+          setActiveByHash("#order");
+          history.pushState(null, "", "#order");
+        });
+      }
+
+      // Ініціалізація вибору та первинний рендер
+      renderProduct(select.value);
+      select.addEventListener("change", () => renderProduct(select.value));
+
+      // Обробник форми (перевірка + повідомлення)
       const form = document.getElementById("orderForm");
       form.addEventListener("submit", (e) => {
         e.preventDefault();
